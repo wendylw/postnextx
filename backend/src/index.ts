@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { Prisma } from '@prisma/client';
 import postsRouter from './routes/posts'; // 假設你有一個 posts 路由文件
+import adminRouter from './routes/admin'; // 假設你有一個 posts 路由文件
 
 // 确保在顶部加载 dotenv
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors(corsOptions));
 // 中间件
 app.use(express.json());
 app.use('/api/posts', postsRouter);
+app.use('/api/admin', adminRouter);
 
 // 路由
 app.get('/', (req, res) => {

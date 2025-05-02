@@ -23,6 +23,24 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// 獲取單個帖子
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: parseInt(id) }, // 将 id 转换为数字
+      include: { author: { select: { name: true, email: true } } },
+    });
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).json({ error: `Post with ID ${id} not found.` }); // 处理未找到的情况
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 // 创建新的帖子
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   // 你可以從 req.body 中獲取更多用於創建用戶的資訊，例如 name
@@ -78,24 +96,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     // }
 
     next(error); // 將錯誤傳遞給 Express 的錯誤處理中間件
-  }
-});
-
-// 獲取單個帖子
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
-  try {
-    const post = await prisma.post.findUnique({
-      where: { id: parseInt(id) }, // 将 id 转换为数字
-      include: { author: { select: { name: true, email: true } } },
-    });
-    if (post) {
-      res.json(post);
-    } else {
-      res.status(404).json({ error: `Post with ID ${id} not found.` }); // 处理未找到的情况
-    }
-  } catch (error) {
-    next(error);
   }
 });
 

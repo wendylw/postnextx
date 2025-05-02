@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import Link from 'next/link';
 
 export default function EditPostPage() {
   const [title, setTitle] = useState<string>(''); ('');
@@ -17,7 +16,7 @@ export default function EditPostPage() {
   // 获取现有帖子数据
   useEffect(() => {
     setIsLoading(true);
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
 
     if (!apiUrl) {
       setError("API URL is not configured.");
@@ -56,7 +55,7 @@ export default function EditPostPage() {
     setIsLoading(true);
     setError(null);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
     if (!apiUrl) {
       setError("API URL is not configured.");
       setIsLoading(false);
