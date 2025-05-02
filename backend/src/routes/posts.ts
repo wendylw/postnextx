@@ -9,7 +9,7 @@ const router: Router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
-      where: { published: true },
+      // where: { published: true },
       include: {
         author: {
           select: { name: true, email: true }, // 包括作者信息
@@ -20,6 +20,24 @@ router.get('/', async (req, res, next) => {
     res.json(posts);
   } catch (error) {
     next(error); // 將錯誤傳遞給 Express 的錯誤處理中間件
+  }
+});
+
+// 獲取單個帖子
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: parseInt(id) }, // 将 id 转换为数字
+      include: { author: { select: { name: true, email: true } } },
+    });
+    if (post) {
+      res.json(post);
+    } else {
+      res.status(404).json({ error: `Post with ID ${id} not found.` }); // 处理未找到的情况
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -78,24 +96,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     // }
 
     next(error); // 將錯誤傳遞給 Express 的錯誤處理中間件
-  }
-});
-
-// 獲取單個帖子
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
-  try {
-    const post = await prisma.post.findUnique({
-      where: { id: parseInt(id) }, // 将 id 转换为数字
-      include: { author: { select: { name: true, email: true } } },
-    });
-    if (post) {
-      res.json(post);
-    } else {
-      res.status(404).json({ error: `Post with ID ${id} not found.` }); // 处理未找到的情况
-    }
-  } catch (error) {
-    next(error);
   }
 });
 

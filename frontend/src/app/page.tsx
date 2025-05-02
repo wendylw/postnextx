@@ -1,4 +1,5 @@
-// import Link from 'next/link'; // 如果要使用 Link，需要導入
+import Link from 'next/link'; // 如果要使用 Link，需要導入
+import DeletePostButton from '@/components/DeletePostButton'; // 確保路徑正確
 
 // ---> 類型定義 <---
 type PostType = {
@@ -7,16 +8,16 @@ type PostType = {
   content?: string | null;
   author?: {
     name: string | null;
-    // email?: string;
+    email?: string;
   } | null;
 };
 
 // 定義獲取數據的異步函數
 async function getPosts(): Promise<PostType[] | undefined> { // <--- 添加返回值類型
-  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
 
   if (!apiUrl) {
-    console.error("Error: NEXT_PUBLIC_API_BASE_URL is not configured.");
+    console.error("Error: NEXT_ADMIN_API_BASE_URL is not configured.");
     return undefined; // 返回 undefined 而不是空數組可能更清晰表明是配置錯誤
   }
 
@@ -68,7 +69,13 @@ export default async function HomePage() {
 
   return (
     <main className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">My Blog</h1>
+      <div className='flex justify-between items-center mb-4'>
+        <h1 className="text-3xl font-bold mb-6">My Blog</h1>
+        <Link href="/admin/create" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          + Create New Post
+        </Link>
+      </div>
+
       {posts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
@@ -76,12 +83,17 @@ export default async function HomePage() {
           {posts.map((post: PostType) => ( // <--- 使用 PostType
             <div key={post.id} className="border p-4 rounded shadow">
               <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p className="text-gray-600">By {post.author?.name || 'Unknown Author'}</p>
-              {/*
+              <p className="text-gray-600">By {post.author?.name || post.author?.email || 'Unknown Author'}</p>
+
               <Link href={`/posts/${post.id}`} className="text-blue-500 hover:underline">
                 Read more
               </Link>
-              */}
+              {/* 编辑按钮 */}
+              <Link href={`/admin/edit/${post.id}`} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded text-sm">
+                Edit
+              </Link>
+              {/* 删除按钮 */}
+              <DeletePostButton postId={post.id} />
             </div>
           ))}
         </div>

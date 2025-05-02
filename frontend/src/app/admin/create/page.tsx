@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; // 使用 App Router 的 useRouter
+import Link from 'next/link'; // 导入 Link 组件
 
 export default function CreatePostPage() {
   const [title, setTitle] = useState<string>(''); (''); // 修正：添加 setTitle
@@ -16,7 +17,7 @@ export default function CreatePostPage() {
     setIsLoading(true);
     setError(null);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
     if (!apiUrl) {
       setError("API URL is not configured.");
       setIsLoading(false);
@@ -98,6 +99,8 @@ export default function CreatePostPage() {
         >
           {isLoading ? 'Creating...' : 'Create Post'}
         </button>
+        {/* 可以添加返回链接 */}
+        <Link href="/">Back to posts</Link>
       </form>
     </main>
   );
