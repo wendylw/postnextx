@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { authenticateToken } from '@/middlewares/authenticateToken';
+import { authenticateToken } from '../../middlewares/authenticateToken';
 import postsRoutes from '../common/posts';
 import usersRoutes from './users';
 import authRoutes from './auth'; // 假設你有一個 auth 路由文件
