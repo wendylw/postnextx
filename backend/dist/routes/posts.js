@@ -21,7 +21,7 @@ const router = express_1.default.Router();
 router.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const posts = yield prisma_1.default.post.findMany({
-            where: { published: true },
+            // where: { published: true },
             include: {
                 author: {
                     select: { name: true, email: true }, // 包括作者信息

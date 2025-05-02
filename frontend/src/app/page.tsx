@@ -1,4 +1,5 @@
 import Link from 'next/link'; // 如果要使用 Link，需要導入
+import DeletePostButton from '@/components/DeletePostButton'; // 確保路徑正確
 
 // ---> 類型定義 <---
 type PostType = {
@@ -68,7 +69,13 @@ export default async function HomePage() {
 
   return (
     <main className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">My Blog</h1>
+      <div className='flex justify-between items-center mb-4'>
+        <h1 className="text-3xl font-bold mb-6">My Blog</h1>
+        <Link href="/admin/create" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+          + Create New Post
+        </Link>
+      </div>
+
       {posts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
@@ -81,7 +88,12 @@ export default async function HomePage() {
               <Link href={`/posts/${post.id}`} className="text-blue-500 hover:underline">
                 Read more
               </Link>
-
+              {/* 编辑按钮 */}
+              <Link href={`/admin/edit/${post.id}`} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded text-sm">
+                Edit
+              </Link>
+              {/* 删除按钮 */}
+              <DeletePostButton postId={post.id} />
             </div>
           ))}
         </div>

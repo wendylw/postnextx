@@ -9,7 +9,7 @@ const router: Router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
-      where: { published: true },
+      // where: { published: true },
       include: {
         author: {
           select: { name: true, email: true }, // 包括作者信息

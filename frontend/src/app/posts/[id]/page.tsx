@@ -1,6 +1,7 @@
 
 import Link from 'next/link'; // 如果要使用 Link，需要導入
 import { notFound } from 'next/navigation'; // 用于处理 404
+import DeletePostButton from '@/components/DeletePostButton'; // 假设组件位于 components 文件夹
 
 async function getPost(id: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -79,6 +80,12 @@ export default async function PostPage({ params: { id } }: { params: { id: strin
         {/* 假设 content 是 Markdown 或纯文本 */}
         <p>{post.content || 'No content available.'}</p>
       </div>
+      {/* 编辑按钮 */}
+      <Link href={`/admin/edit/${post.id}`} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded text-sm">
+        Edit
+      </Link>
+      {/* 删除按钮 */}
+      <DeletePostButton postId={post.id} />
       {/* 可以添加返回链接 */}
       <Link href="/">Back to posts</Link>
     </main >
