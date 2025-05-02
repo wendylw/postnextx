@@ -14,10 +14,10 @@ type PostType = {
 
 // 定義獲取數據的異步函數
 async function getPosts(): Promise<PostType[] | undefined> { // <--- 添加返回值類型
-  const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
 
   if (!apiUrl) {
-    console.error("Error: NEXT_ADMIN_API_BASE_URL is not configured.");
+    console.error("Error: NEXT_PUBLIC_ADMIN_API_BASE_URL is not configured.");
     return undefined; // 返回 undefined 而不是空數組可能更清晰表明是配置錯誤
   }
 

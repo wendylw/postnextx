@@ -17,7 +17,7 @@ export default function CreatePostPage() {
     setIsLoading(true);
     setError(null);
 
-    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
     if (!apiUrl) {
       setError("API URL is not configured.");
       setIsLoading(false);

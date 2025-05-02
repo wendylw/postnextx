@@ -16,7 +16,7 @@ export default function EditPostPage() {
   // 获取现有帖子数据
   useEffect(() => {
     setIsLoading(true);
-    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
 
     if (!apiUrl) {
       setError("API URL is not configured.");
@@ -55,7 +55,7 @@ export default function EditPostPage() {
     setIsLoading(true);
     setError(null);
 
-    const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
     if (!apiUrl) {
       setError("API URL is not configured.");
       setIsLoading(false);

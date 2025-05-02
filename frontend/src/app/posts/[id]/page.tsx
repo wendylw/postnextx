@@ -4,12 +4,12 @@ import { notFound } from 'next/navigation'; // 用于处理 404
 import DeletePostButton from '@/components/DeletePostButton'; // 假设组件位于 components 文件夹
 
 async function getPost(id: string) {
-  const apiUrl = process.env.NEXT_ADMIN_API_BASE_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
   // 建議保留日誌，方便調試
   console.log('[getPost] Trying to fetch post. ID:', id, 'API URL:', apiUrl);
 
   if (!apiUrl) {
-    console.error("Error: NEXT_ADMIN_API_BASE_URL is not configured.");
+    console.error("Error: NEXT_PUBLIC_ADMIN_API_BASE_URL is not configured.");
     // 考慮拋出錯誤或返回特定錯誤狀態，而不是 null，以便上游更好地區分
     // throw new Error("API URL not configured");
     return null;
