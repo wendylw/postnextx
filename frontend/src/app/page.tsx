@@ -1,4 +1,4 @@
-// import Link from 'next/link'; // 如果要使用 Link，需要導入
+import Link from 'next/link'; // 如果要使用 Link，需要導入
 
 // ---> 類型定義 <---
 type PostType = {
@@ -7,7 +7,7 @@ type PostType = {
   content?: string | null;
   author?: {
     name: string | null;
-    // email?: string;
+    email?: string;
   } | null;
 };
 
@@ -76,12 +76,12 @@ export default async function HomePage() {
           {posts.map((post: PostType) => ( // <--- 使用 PostType
             <div key={post.id} className="border p-4 rounded shadow">
               <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p className="text-gray-600">By {post.author?.name || 'Unknown Author'}</p>
-              {/*
+              <p className="text-gray-600">By {post.author?.name || post.author?.email || 'Unknown Author'}</p>
+
               <Link href={`/posts/${post.id}`} className="text-blue-500 hover:underline">
                 Read more
               </Link>
-              */}
+
             </div>
           ))}
         </div>
