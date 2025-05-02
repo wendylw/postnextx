@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement()) // 主键，自增
+  title     String
+  content   String?
+  published Boolean  @default(false) // 是否发布，默认为 false
+  createdAt DateTime @default(now()) // 创建时间，默认为当前时间
+  updatedAt DateTime @updatedAt // 更新时间，自动更新
+  authorId  Int // 外键字段，关联 User 的 id (可选) [86]
+  User      User     @relation(fields: [authorId], references: [id]) // 与 User 模型的关系 (可选作者) [86]
+
+  @@index([authorId]) // 为外键添加索引以提高查询性能 [87]
+}
+
+model User {
+  id    Int     @id @default(autoincrement()) // 主键，自增
+  email String  @unique // 邮箱，唯一约束
+  name  String? // 姓名，可选
+  Post  Post[] // 与 Post 模型的一对多关系 (用户可以有多篇文章) [85, 86]
+}
