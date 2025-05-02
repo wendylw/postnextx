@@ -1,5 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import prisma from '../lib/prisma';
+import prisma from '../../lib/prisma';
 
 // 創建一個 Router 實例，並添加類型註解
 const router: Router = express.Router();

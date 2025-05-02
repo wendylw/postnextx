@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { Prisma } from '@prisma/client';
-import postsRouter from './routes/posts'; // 假設你有一個 posts 路由文件
+import postsRouter from './routes/common/posts'; // 假設你有一個 posts 路由文件
 import adminRouter from './routes/admin'; // 假設你有一個 posts 路由文件
 
 // 确保在顶部加载 dotenv
