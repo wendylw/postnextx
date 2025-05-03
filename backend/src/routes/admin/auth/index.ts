@@ -110,13 +110,6 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       },
     });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        code: 400,
-        message: '验证失败',
-        data: { errors: error.errors },
-      });
-    }
     next(error);
   }
 });
@@ -180,10 +173,8 @@ router.post('/logout', async (req: Request, res: Response, next: NextFunction) =
   } catch (error) {
     res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, cookieOptions);
     res.clearCookie(ACCESS_TOKEN_COOKIE_NAME, cookieOptions); // Clear access token cookie too if used
-    res.status(500).json({
-      code: 500,
-      message: '登出处理时发生错误',
-    });
+
+    next(error);
   }
 });
 
@@ -277,14 +268,6 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
       data: newUser,
     });
   } catch (error) {
-    // 处理 Zod 验证错误或其他错误
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        code: 400,
-        message: '验证失败',
-        data: { errors: error.errors },
-      });
-    }
     next(error); // 将其他错误传递给全局错误处理中间件
   }
 });
