@@ -98,16 +98,24 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 
     // Return access token and user info
     res.json({
-      accessToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
+      code: 200,
+      message: '登录成功',
+      data: {
+        accessToken,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        },
       },
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ message: 'Validation failed', errors: error.errors });
+      return res.status(400).json({
+        code: 400,
+        message: '验证失败',
+        data: { errors: error.errors },
+      });
     }
     next(error);
   }
@@ -165,17 +173,17 @@ router.post('/logout', async (req: Request, res: Response, next: NextFunction) =
     // 清除访问 Cookie
     res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, cookieOptions);
     res.clearCookie(ACCESS_TOKEN_COOKIE_NAME, cookieOptions); // Clear access token cookie too if used
-    res.status(204).send();
+    res.status(200).json({
+      code: 200,
+      message: '登出成功',
+    });
   } catch (error) {
-    console.error('Logout error:', error);
-    // Even if DB operation fails, try to clear cookies and respond successfully
-    // to avoid confusing the user or revealing internal errors.
     res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, cookieOptions);
-    res.clearCookie(ACCESS_TOKEN_COOKIE_NAME, cookieOptions);
-    // You might choose to still send 204, or a 500 if you want to signal a server issue
-    res.status(200).json({ message: 'Logout processed, but server cleanup might have issues.' });
-    // Alternatively, pass to global error handler:
-    next(error);
+    res.clearCookie(ACCESS_TOKEN_COOKIE_NAME, cookieOptions); // Clear access token cookie too if used
+    res.status(500).json({
+      code: 500,
+      message: '登出处理时发生错误',
+    });
   }
 });
 
@@ -263,11 +271,19 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
     });
 
     // 5. 返回成功响应
-    res.status(201).json(newUser);
+    res.status(201).json({
+      code: 201,
+      message: '注册成功',
+      data: newUser,
+    });
   } catch (error) {
     // 处理 Zod 验证错误或其他错误
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ message: 'Validation failed', errors: error.errors });
+      return res.status(400).json({
+        code: 400,
+        message: '验证失败',
+        data: { errors: error.errors },
+      });
     }
     next(error); // 将其他错误传递给全局错误处理中间件
   }
