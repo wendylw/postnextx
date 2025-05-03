@@ -20,6 +20,24 @@ model Post {
   @@index([authorId])
 }
 
+model TokenBlacklist {
+  id        String   @id @default(cuid())
+  jti       String   @unique // JWT ID (jti claim)
+  expiresAt DateTime // 应与原始 JWT 的过期时间一致
+
+  createdAt DateTime @default(now())
+}
+
+model RefreshToken {
+  id          String   @id @default(cuid())
+  hashedToken String   @unique // 存储刷新令牌的哈希值
+  revoked     Boolean  @default(false) // 标记为已撤销，或直接删除记录
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) // 级联删除
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime // 刷新令牌的过期时间
+}
+
 model User {
   id        String   @id @default(cuid()) // 或者 Int @id @default(autoincrement())
   email     String   @unique
@@ -27,7 +45,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   password  Password? // 可选的一对一关系
-  // 如果使用 NextAuth.js Adapter，还需要 Account, Session 等模型
+  refreshTokens RefreshToken[]
   accounts Account[]
   sessions Session[]
   posts  Post[]

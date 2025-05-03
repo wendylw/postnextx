@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { Prisma } from '@prisma/client';
 import postsRouter from './routes/common/posts'; // 假設你有一個 posts 路由文件
@@ -16,6 +17,8 @@ const corsOptions = {
   optionsSuccessStatus: 200, // 某些旧版浏览器需要 204
 };
 
+// 解析 cookie
+app.use(cookieParser());
 // 允许所有来源
 app.use(cors(corsOptions));
 // 中间件
