@@ -117,12 +117,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           success: false, error: errorData.message || `Login failed with status: ${response.status}`
         };
       }
-    } catch (error: any) {
-      console.error('Login error:', error);
-      setIsLoading(false);
+    } catch (error: unknown) {
+      // Handle network errors or unexpected issues
+      let errorMessage = "An unexpected error occurred.";
+      if (error instanceof Error) {
+        errorMessage = error.message; // If it's an Error instance, use its message
+      } else if (typeof error === 'string') {
+        errorMessage = error; // If the error is a string
+      }
+
       return {
-        success: false, error: error.message || 'An unexpected error occurred during login.'
+        success: false, error: errorMessage
       };
+    } finally {
+      setIsLoading(false);
     }
   };
 

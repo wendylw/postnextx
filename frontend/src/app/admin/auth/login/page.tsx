@@ -42,8 +42,24 @@ const LoginPage: React.FC = () => {
       // Redirect to posts page
       router.replace('/'); // <-- 在這裡執行替換導航
 
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err: unknown) {
+      let errorMessage = "An unexpected error occurred."; // 2. 提供一个默认错误消息
+
+      // 3. 进行类型检查以安全地获取错误消息
+      if (err instanceof Error) {
+        errorMessage = err.message; // 如果是 Error 实例，安全地使用它的 message
+      } else if (typeof err === 'string') {
+        errorMessage = err; // 如果错误本身就是个字符串
+      }
+      // 可选：添加更多检查，比如检查是否是一个包含 message 属性的普通对象
+      // else if (typeof err === 'object' && err !== null && 'message' in err && typeof err.message === 'string') {
+      //   errorMessage = err.message;
+      // }
+
+      // 4. 使用提取出的、类型安全的消息来更新状态
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false); // 5. 确保在请求结束后重置加载状态
     }
   };
 
