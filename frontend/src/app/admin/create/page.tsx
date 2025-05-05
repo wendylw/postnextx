@@ -26,47 +26,32 @@ export default function CreatePostPage() {
 
     try {
       const res = await fetch(`${apiUrl}/posts`, {
-        method: 'POST', // 指定 POST 方法 [35]
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // 指定内容类型为 JSON
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content, authorEmail }), // 序列化请求体 [35]
+        body: JSON.stringify({ title, content, authorEmail }),
       });
 
       if (!res.ok) {
-        // 尝试解析错误响应体
         let errorMsg = `Failed to create post: ${res.status}`;
-
         try {
           const errorData = await res.json();
-          errorMsg = errorData.error || errorMsg; // 使用后端返回的错误信息（如果可用）
-
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (parseError) {
-          // 如果响应体不是 JSON 或解析失败，使用状态文本
+          errorMsg = errorData.error || errorMsg;
+        } catch (_parseError) { // <--- FIX APPLIED HERE
           errorMsg = `Failed to create post: ${res.status} ${res.statusText}`;
         }
-
         throw new Error(errorMsg);
-      } // 创建成功后，可以重定向到首页或新帖子的页面
-      router.push('/'); // 重定向到首页
-      // 或者 router.refresh(); // 刷新当前路由数据
-
-    } catch (err: unknown) { // 1. 将 err 的类型改为 unknown
-      let errorMessage = "An unexpected error occurred."; // 2. 提供一个默认错误消息
-
-      // 3. 进行类型检查以安全地获取错误消息
-      if (err instanceof Error) {
-        errorMessage = err.message; // 如果是 Error 实例，安全地使用它的 message
-      } else if (typeof err === 'string') {
-        errorMessage = err; // 如果错误本身就是个字符串
       }
-      // 可选：添加更多检查，比如检查是否是一个包含 message 属性的普通对象
-      // else if (typeof err === 'object' && err !== null && 'message' in err && typeof err.message === 'string') {
-      //   errorMessage = err.message;
-      // }
+      router.push('/');
 
-      // 4. 使用提取出的、类型安全的消息来更新状态
+    } catch (err: unknown) {
+      let errorMessage = "An unexpected error occurred.";
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'string') {
+        errorMessage = err;
+      }
       setError(errorMessage);
 
     } finally {
@@ -95,7 +80,7 @@ export default function CreatePostPage() {
             type="text"
             id="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)} // 修正：使用 setTitle
+            onChange={(e) => setTitle(e.target.value)}
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
@@ -118,8 +103,7 @@ export default function CreatePostPage() {
         >
           {isLoading ? 'Creating...' : 'Create Post'}
         </button>
-        {/* 可以添加返回链接 */}
-        <Link href="/">Back to posts</Link>
+        <Link href="/" className="ml-4 text-indigo-600 hover:text-indigo-800">Back to posts</Link> {/* Added className for spacing/styling */}
       </form>
     </main>
   );
