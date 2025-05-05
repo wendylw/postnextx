@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/src/index.ts",
+      "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["backend/prisma/**", "backend/dist/**"]
+        "includeFiles": ["prisma/schema.prisma", "dist/**", "node_modules/.prisma/client/**"]
       }
     },
     {
@@ -15,7 +15,7 @@
   ],
   "routes": [
     {
-      "src": "^/api/(.*)$",
+      "src": "/api/(.*)",
       "dest": "/backend/dist/index.js"
     },
     {
