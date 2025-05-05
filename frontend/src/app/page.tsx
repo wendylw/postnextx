@@ -4,7 +4,7 @@ import DeletePostButton from '@/components/DeletePostButton'; // 確保路徑正
 
 // ---> 類型定義 <---
 type PostType = {
-  id: number;
+  id: string;
   title: string;
   content?: string | null;
   author?: {

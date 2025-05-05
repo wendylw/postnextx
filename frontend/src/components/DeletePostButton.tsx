@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface DeletePostButtonProps {
-  postId: number; // 或者 string，取决于你的 ID 类型
+  postId: string; // 或者 string，取决于你的 ID 类型
 }
 
 export default function DeletePostButton({ postId }: DeletePostButtonProps) {
