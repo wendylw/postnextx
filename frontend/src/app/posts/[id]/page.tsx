@@ -3,6 +3,14 @@ import Link from 'next/link'; // 如果要使用 Link，需要導入
 import { notFound } from 'next/navigation'; // 用于处理 404
 import DeletePostButton from '@/components/DeletePostButton'; // 假设组件位于 components 文件夹
 
+interface PostPageProps {
+  params: {
+    id: string; // 假设你的动态路由段是 [id]
+  };
+  // 如果你还可能用到 searchParams，也可以在这里定义
+  // searchParams?: { [key: string]: string | string[] | undefined };
+}
+
 async function getPost(id: string) {
   const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
   // 建議保留日誌，方便調試
@@ -64,7 +72,8 @@ async function getPost(id: string) {
 }
 
 // 页面组件接收 params 作为 props
-export default async function PostPage({ params: { id } }: { params: { id: string } }) {
+export default async function PostPage({ params }: PostPageProps) {
+  const { id } = params; // 解构出 id
   console.log("Page parameter ID (destructured in signature):", id);
   const post = await getPost(id); // 直接使用 id
 
