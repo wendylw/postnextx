@@ -5,14 +5,17 @@
       "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "buildCommand": "cd backend && npm install && npx prisma generate && npm run build",
+        "buildCommand": "cd backend && npm install && npx prisma generate --schema=./prisma/schema.prisma && npm run build",
         "outputDirectory": "backend/dist",
-        "includeFiles": ["backend/prisma/schema.prisma", "backend/dist/**", "backend/node_modules/.prisma/client/**"]
+        "includeFiles": ["backend/prisma/**"]
       }
     },
     {
       "src": "frontend/package.json",
-      "use": "@vercel/next"
+      "use": "@vercel/next",
+      "config": {
+        "buildCommand": "cd frontend && npm install && npm run build"
+      }
     }
   ],
   "routes": [
