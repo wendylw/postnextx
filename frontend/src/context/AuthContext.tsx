@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Run the check on component mount
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [checkAuthStatus]);
 
   // Login function
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {

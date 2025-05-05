@@ -39,9 +39,12 @@ async function getPost(id: string) {
       let errorBody = '';
       try {
         errorBody = await res.text(); // 或者 res.json() 如果後端返回 JSON 錯誤
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
         // 忽略讀取 body 的錯誤
+        errorBody = 'Failed to read error body';
       }
+
       throw new Error(`Failed to fetch post ${id}: ${res.status} ${res.statusText}. Body: ${errorBody}`);
     }
 

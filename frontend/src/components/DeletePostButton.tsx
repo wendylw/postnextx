@@ -39,6 +39,8 @@ export default function DeletePostButton({ postId }: DeletePostButtonProps) {
         try {
           const errorData = await res.json();
           errorMsg = errorData.error || errorMsg;
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (parseError) {
           errorMsg = `Failed to delete post: ${res.status} ${res.statusText}`;
         }

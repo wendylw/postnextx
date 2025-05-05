@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'; // 使用 App Router 的 useRouter
 import Link from 'next/link'; // 导入 Link 组件
 
 export default function CreatePostPage() {
-  const [title, setTitle] = useState<string>(''); (''); // 修正：添加 setTitle
+  const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState('');
   const [authorEmail, setAuthorEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -36,13 +36,17 @@ export default function CreatePostPage() {
       if (!res.ok) {
         // 尝试解析错误响应体
         let errorMsg = `Failed to create post: ${res.status}`;
+
         try {
           const errorData = await res.json();
           errorMsg = errorData.error || errorMsg; // 使用后端返回的错误信息（如果可用）
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (parseError) {
           // 如果响应体不是 JSON 或解析失败，使用状态文本
           errorMsg = `Failed to create post: ${res.status} ${res.statusText}`;
         }
+
         throw new Error(errorMsg);
       } // 创建成功后，可以重定向到首页或新帖子的页面
       router.push('/'); // 重定向到首页

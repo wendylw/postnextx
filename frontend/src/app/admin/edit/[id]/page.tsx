@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 export default function EditPostPage() {
-  const [title, setTitle] = useState<string>(''); ('');
+  const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState('');
   const [published, setPublished] = useState(false); // 添加 published 状态
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +76,8 @@ export default function EditPostPage() {
         try {
           const errorData = await res.json();
           errorMsg = errorData.error || errorMsg;
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (parseError) {
           errorMsg = `Failed to update post: ${res.status} ${res.statusText}`;
         }
