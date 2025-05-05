@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "vercel-build": "cd backend && npm ci && npx prisma generate --schema=./prisma/schema.prisma && npm run build && cd ../frontend && npm ci && npm run build"
-  }
-}

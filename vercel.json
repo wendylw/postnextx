@@ -2,9 +2,13 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/package.json",
+      "src": "backend/**/*.js",
       "use": "@vercel/node",
       "config": {
+        "installCommand": "npm install",
+        "outputDirectory": "backend/dist",
+        "buildCommand": "cd backend && ",
+        "outputFile": "dist/index.js",
         "includeFiles": ["prisma/schema.prisma", "dist/**", "node_modules/.prisma/client/**"]
       }
     },
