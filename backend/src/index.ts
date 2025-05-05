@@ -10,7 +10,11 @@ import adminRouter from './routes/admin'; // 假設你有一個 posts 路由文�
 dotenv.config();
 
 const app = express();
-const port = Number(process.env.PORT) || 3001;
+app.use((req, res, next) => {
+  console.log('Received request path:', req.path);
+  console.log('Received original URL:', req.originalUrl);
+  next(); // 继续处理请求
+});
 // 配置 CORS
 const corsOptions = {
   origin: process.env.FRONTEND_URL, // 允许的来源
