@@ -2,11 +2,9 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/package.json",
+      "src": "backend/src/index.ts",
       "use": "@vercel/node",
       "config": {
-        "buildCommand": "cd backend && npm install && npx prisma generate --schema=./prisma/schema.prisma && npm run build",
-        "outputDirectory": "backend/dist",
         "includeFiles": ["backend/prisma/**"]
       }
     },
@@ -17,8 +15,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/dist/index.js"
+      "src": "^/api/(.*)$",
+      "dest": "/backend/src/index.ts"
     },
     {
       "src": "/(.*)",
