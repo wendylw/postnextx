@@ -12,10 +12,7 @@
     },
     {
       "src": "frontend/package.json",
-      "use": "@vercel/next",
-      "config": {
-        "buildCommand": "cd ../frontend && npm install && npm run build"
-      }
+      "use": "@vercel/next"
     }
   ],
   "routes": [
