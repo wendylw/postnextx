@@ -38,7 +38,9 @@ export default function CreatePostPage() {
         try {
           const errorData = await res.json();
           errorMsg = errorData.error || errorMsg;
-        } catch (_parseError) { // <--- FIX APPLIED HERE
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_parseError) {
           errorMsg = `Failed to create post: ${res.status} ${res.statusText}`;
         }
         throw new Error(errorMsg);
