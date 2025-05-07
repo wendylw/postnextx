@@ -12,7 +12,8 @@
     "prisma:generate": "npx prisma generate",
     "prisma:migrate:dev": "npx prisma migrate dev",
     "prisma:migrate:deploy": "npx prisma migrate deploy",
-    "prisma:seed": "ts-node src/lib/prisma/seed.ts"
+    "prisma:seed": "ts-node src/lib/prisma/seed.ts",
+    "postinstall": "prisma generate && prisma migrate deploy"
   },
   "keywords": [
     "postnextx",
