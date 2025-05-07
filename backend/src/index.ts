@@ -10,11 +10,6 @@ import adminRouter from './routes/admin'; // 假設你有一個 posts 路由文�
 dotenv.config();
 
 const app = express();
-app.use((req, res, next) => {
-  console.log('Received request path:', req.path);
-  console.log('Received original URL:', req.originalUrl);
-  next(); // 继续处理请求
-});
 // 配置 CORS
 const corsOptions = {
   origin: process.env.FRONTEND_URL, // 允许的来源
@@ -33,6 +28,11 @@ app.use('/api/admin', adminRouter);
 // 路由
 app.get('/', (req, res) => {
   res.send('Hello World!');
+});
+app.get('/healthz', (req, res) => {
+  // 您可以在此处添加更复杂的检查，例如数据库连接状态
+  // 但对于基本健康检查，返回 200 OK 即可
+  res.status(200).send('OK');
 });
 
 // 自定义错误处理中间件
