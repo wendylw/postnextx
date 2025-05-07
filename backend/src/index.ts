@@ -51,12 +51,11 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // 启动服务器
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-  const port = Number(process.env.PORT) || 3001; // 端口定义移到这里
-  app.listen(port, () => {
-    console.log(`Server is running locally at http://localhost:${port}`);
-  });
-}
+const port = Number(process.env.PORT) || 3001; // 端口定义移到这里
+
+app.listen(port, '::', () => {
+  console.log(`Server is running locally at http://localhost:${port}`);
+});
 
 // 导出 app 以便测试
 export default app;
