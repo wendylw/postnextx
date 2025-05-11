@@ -1,4 +1,12 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'lihsianti';
+  src: url('/fonts/lihsianti.woff2') format('woff2'), url('/fonts/lihsianti.woff') format('woff'),
+    url('/fonts/lihsianti.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 :root {
   --background: #ffffff;
