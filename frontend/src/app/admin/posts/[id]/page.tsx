@@ -39,7 +39,7 @@ function usePost(id: string | undefined | null) {
     setPost(null);
 
     const fetchPost = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const apiUrl = process.env.NEXT_PUBLIC_ADMIN_API_BASE_URL;
       console.log('[usePost Hook] Trying to fetch post. ID:', id, 'API URL:', apiUrl);
 
       if (!apiUrl) {
