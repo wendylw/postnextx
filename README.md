@@ -23,9 +23,11 @@ macOS
 
 ## 📂 Structure
 
+```
 /
 ├── frontend/ → Next.js frontend application
 └── backend/ → Express backend API with PostgreSQL (Prisma ORM)
+```
 
 ---
 
