@@ -40,7 +40,7 @@ macOS
 3. Open the app and click **Initialize** to create a default server.
 4. Add PostgreSQL binaries to your `PATH` by adding this line to your `.zshrc` or `.bash_profile`:
 ```bash
-   export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 ```
 5. Restart your terminal and check the version:
 ```bash
